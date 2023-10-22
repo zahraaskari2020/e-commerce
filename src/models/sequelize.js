@@ -1,12 +1,13 @@
-const Sequelize  = require('sequelize');
+const Sequelize = require("sequelize");
+const UserModel = require("./users");
+
 const dotenv = require('dotenv');
 
-global.dotenv=dotenv.config();
 
-const sequelize = new Sequelize('test', 'postgres', '123456', {
+global.dotenv=dotenv.config();
+const sequelize = new Sequelize('test', 'postgres', 'zz153369987', {
   host: 'localhost',
   dialect: 'postgres',
-  port: 5432,
   pool: {
     max: 10,
     min: 0,
@@ -15,4 +16,12 @@ const sequelize = new Sequelize('test', 'postgres', '123456', {
   },
   logging: false
 });
-module.exports = sequelize;
+
+const User = UserModel(sequelize, Sequelize);
+
+sequelize.sync({ force: false }).then(() => {
+});
+module.exports = {
+    User,
+    Op:Sequelize.Op
+};

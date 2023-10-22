@@ -1,31 +1,15 @@
 const express= require('express');
-const sequelize = require ('./src/models/sequelize');
-const User = require('./src/models/users')
-const Product = require('./src/models/products')
-const Order = require('./src/models/orders')
 const app=express();
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const router = express.Router();
+const api = require('./src/routes/api')
 
 app.use(bodyParser.json());
 dotenv.config();
 global.dotenv=dotenv;
 
-// //create tables
-
-(async () => {
-	try {
-	  await sequelize.sync({ alter: false });
-	  console.log('Tables created successfully (if they didn\'t already exist)');
-	} catch (error) {
-	  console.error('Error creating tables:', error);
-	} finally {
-	  await sequelize.close();
-	}
-  })();
-
-
+  app.use("/api",api);
 
 // Handle 404 errors
 app.get('*', function(req, res){
