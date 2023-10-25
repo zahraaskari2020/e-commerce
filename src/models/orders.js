@@ -1,25 +1,15 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('./sequelize');
-
-exports.orderTable = async () => {
+module.exports = (sequelize, type) => {
    return sequelize.define('Order', {
         id: {
-          type: DataTypes.INTEGER,
+          type: type.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
-        user_is: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        product_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        status: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        }
+        user_id: type.INTEGER,
+        product_id: type.INTEGER,
+        status: type.STRING,
+        created_at: type.DATE,
+        updated_at: type.DATE,
     }, {
       tableName: 'orders',
       timestamps: true,
